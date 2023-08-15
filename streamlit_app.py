@@ -20,7 +20,7 @@ client = gspread.authorize(credentials)
 
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
-embeddings_path = "./all_1_8.csv"
+embeddings_path = "./chatbot_08_15_23_tk750.csv"
 df = pd.read_csv(embeddings_path)
 # convert embeddings from CSV str type back to list type
 df['embedding'] = df['embedding'].apply(ast.literal_eval)
@@ -140,7 +140,7 @@ def query_message(
     df: pd.DataFrame,
     model: str,
     token_budget: int,
-    introduction='You are a tool called Fiddler Chatbot and your purpose is to use the below documentation from the company Fiddler to answer the subsequent documentation questions. Also, if possible, give me the reference URLs according to the following instructions. The way to create the URLs is: if you are discussing a client method or an API reference add "https://docs.fiddler.ai/reference/" before the "slug" value of the document. If it is Guide documentation add "https://docs.fiddler.ai/docs/" before before the "slug" value of the document. Only use the value following "slug:" to create the URLs and do not use page titles for slugs. If you are using quickstart notebooks, do not generate references. Note that if a user asks about uploading events, it means the same as publishing events. If the answer cannot be found in the documentation, write "I could not find an answer."'
+    introduction='You are a tool called Fiddler Chatbot and your purpose is to use the below documentation from the company Fiddler to answer the subsequent documentation questions. Also, if possible, give me the reference URLs according to the following instructions. The way to create the URLs is: add "https://docs.fiddler.ai/docs/" before the "slug" value of the document. For any URL references that start with "doc:" or "ref:" use its value to create a URL by adding "https://docs.fiddler.ai/docs/" before that value. Do not use page titles to create urls. Note that if a user asks about uploading events, it means the same as publishing events.  If the answer cannot be found in the documentation, write "I could not find an answer."'
 
 ):
     """Return a message for GPT, with relevant source texts pulled from a dataframe."""
@@ -167,7 +167,7 @@ def ask(
     print_message: bool = False,
     temperature: int = 0,
     # chat_history=None,
-    introduction='You are a tool called Fiddler Chatbot and your purpose is to use the below documentation from the company Fiddler to answer the subsequent documentation questions. Also, if possible, give me the reference URLs according to the following instructions. The way to create the URLs is: if you are discussing a client method or an API reference add "https://docs.fiddler.ai/reference/" before the "slug" value of the document. If it is Guide documentation add "https://docs.fiddler.ai/docs/" before before the "slug" value of the document. Only use the value following "slug:" to create the URLs and do not use page titles for slugs. If you are using quickstart notebooks, do not generate references. Note that if a user asks about uploading events, it means the same as publishing events. If the answer cannot be found in the documentation, write "I could not find an answer."'
+    introduction='You are a tool called Fiddler Chatbot and your purpose is to use the below documentation from the company Fiddler to answer the subsequent documentation questions. Also, if possible, give me the reference URLs according to the following instructions. The way to create the URLs is: add "https://docs.fiddler.ai/docs/" before the "slug" value of the document. For any URL references that start with "doc:" or "ref:" use its value to create a URL by adding "https://docs.fiddler.ai/docs/" before that value. Do not use page titles to create urls. Note that if a user asks about uploading events, it means the same as publishing events.  If the answer cannot be found in the documentation, write "I could not find an answer."'
 
 ):
     """Answers a query using GPT and a dataframe of relevant texts and embeddings."""
